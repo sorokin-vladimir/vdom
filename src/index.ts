@@ -1,17 +1,28 @@
 export * from './types';
 export * from './vdom';
 
-/* import { createVNode, createDOMNode, mount } from './vdom';
+/* import { createVNode, createDOMNode, mount, patchNode } from './vdom';
+import { ResultDOMNode } from './types';
 
-const vNode = createVNode('div', { class: 'container' }, [
-  createVNode('h1', {}, ['Hello, Virtual DOM']),
-  'Text without tags',
-  createVNode('img', { src: 'https://i.ibb.co/M6LdN5m/2.png', width: 200 }),
-]);
+const createVApp = (state: { count: number }) => {
+  const { count } = state;
+  return createVNode('div', { class: 'container', 'data-count': count }, [
+    createVNode('h1', {}, ['Hello, Virtual DOM']),
+    createVNode('div', {}, [`Count: ${count}`]),
+    'Text without tags',
+    createVNode('img', { src: 'https://i.ibb.co/M6LdN5m/2.png', width: 200 }),
+  ]);
+}
 
-const domNode = createDOMNode(vNode);
+const state = { count: 0 };
+const root = document.getElementById('root');
 
-mount(domNode, document.getElementById('root') as HTMLElement);
+let vApp = createVApp(state);
+let app = mount(createDOMNode(vApp), root as HTMLElement);
 
-console.log(`index:11 | vNode`, vNode);
-console.log(`index:13 | domNode`, domNode); */
+setInterval(() => {
+  state.count++;
+  const nextVApp = createVApp(state);
+  app = patchNode(app, vApp, nextVApp) as ResultDOMNode;
+  vApp = nextVApp;
+}, 1000); */
